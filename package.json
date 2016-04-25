@@ -1,0 +1,25 @@
+{
+  "name": "stdbot-flowdock",
+  "version": "0.1.0",
+  "description": "Flowdock adapter for stdbot.",
+  "keywords": [
+    "stdbot-adapter"
+  ],
+  "homepage": "https://github.com/stdbot/flowdock",
+  "bugs": "https://github.com/stdbot/flowdock/issues",
+  "license": "Unlicense",
+  "author": {
+    "name": "Valérian Galliat",
+    "url": "https://val.codejam.info/"
+  },
+  "repository": "stdbot/flowdock",
+  "scripts": {
+    "lint": "standard"
+  },
+  "dependencies": {
+    "flowdock": "^0.9.0"
+  },
+  "devDependencies": {
+    "standard": "^5.4.1"
+  }
+}
