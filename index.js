@@ -2,8 +2,17 @@ const { EventEmitter } = require('events')
 const flowdock = require('flowdock')
 const format = require('./format')
 
+const flowPath = flow =>
+  `${flow.organization.parameterized_name}/${flow.parameterized_name}`
+
+const findFlow = identifier => flow =>
+  flow.id === identifier ||
+    flow.parameterized_name === identifier ||
+    flowPath(flow) === identifier ||
+    flow.name.toLowerCase() === identifier.toLowerCase()
+
 const isFlowSelected = flows => flow =>
-  flows.indexOf(flow.id) >= 0 || flows.indexOf(flow.parameterized_name) >= 0
+  flows.find(identifier => findFlow(identifier)(flow))
 
 const callRes = (session, method, ...args) =>
   new Promise((resolve, reject) =>
