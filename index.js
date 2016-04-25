@@ -38,8 +38,8 @@ function Flowdock (config) {
   const onEvent = event =>
     event.user !== state.userId && emitter.emit(`raw:${event.event}`, event)
 
-  const onLoad = state => {
-    const flows = state.flows
+  const onLoad = newState => {
+    const flows = newState.flows
       .filter(config.flows ? isFlowSelected(config.flows) : flow => flow.joined)
       .map(flow => flow.id)
 
@@ -109,6 +109,8 @@ function Flowdock (config) {
     return call(session, 'message', flow ? flow.id : room, text, [])
       .then(format.message(state))
   }
+
+  emitter.end = () => state.stream && state.stream.end()
 
   reload()
 
