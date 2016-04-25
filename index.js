@@ -103,6 +103,13 @@ function Flowdock (config) {
     (message.raw.to ? editPrivate : editFlow)(message, text)
       .then(() => Object.assign({}, message, { text }))
 
+  emitter.messageRoom = (room, text) => {
+    const flow = state.flows.find(findFlow(room))
+
+    return call(session, 'message', flow ? flow.id : room, text, [])
+      .then(format.message(state))
+  }
+
   reload()
 
   return emitter
