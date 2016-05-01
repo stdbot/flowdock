@@ -75,6 +75,12 @@ function Flowdock (config) {
   emitter.mention = user => `@${user.name}`
   emitter.address = (user, text) => `${emitter.mention(user)}, ${text}`
 
+  emitter.mentions = message =>
+    message.raw.tags
+      .filter(tag => tag.startsWith(':user:'))
+      .map(tag => tag.split(':').pop())
+      .map(id => state.usersById[id])
+
   emitter.isMentioned = (user, message) =>
     message.raw.tags.includes(`:user:${user.id}`)
 
