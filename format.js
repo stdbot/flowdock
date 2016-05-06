@@ -12,6 +12,7 @@ exports.message = state => message => ({
   raw: message,
   id: message.id,
   author: state.usersById[message.user],
+  thread: message.thread_id,
   text: message.content
 })
 
