@@ -1,6 +1,6 @@
 {
   "name": "stdbot-flowdock",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Flowdock adapter for stdbot.",
   "keywords": [
     "stdbot-adapter"
