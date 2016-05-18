@@ -94,20 +94,23 @@ function Flowdock (config) {
     (message.raw.to ? sendPrivate : sendFlow)(message, text)
       .then(format.message(state))
 
-  const editFlow = (message, text) => {
+  const editFlow = (message, data) => {
     const flowObject = state.flowsById[message.raw.flow]
     const flow = flowObject.parameterized_name
     const org = flowObject.organization.parameterized_name
 
-    return call(session, 'editMessage', flow, org, message.id, { content: text })
+    return call(session, 'editMessage', flow, org, message.id, data)
   }
 
   const editPrivate = (message, text) =>
     call(session, 'put', `/private/${message.raw.to}/messages/${message.id}`, { content: text })
 
   emitter.edit = (message, text) =>
-    (message.raw.to ? editPrivate : editFlow)(message, text)
+    (message.raw.to ? editPrivate : editFlow)(message, { content: text })
       .then(() => Object.assign({}, message, { text }))
+
+  emitter.tag = (message, tags) =>
+    editFlow(message, { tags: message.raw.tags.concat(tags) })
 
   emitter.messageRoom = (room, text) => {
     const flow = state.flows.find(findFlow(room))
