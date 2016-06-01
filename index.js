@@ -80,6 +80,7 @@ function Flowdock (config) {
       .filter(tag => tag.startsWith(':user:'))
       .map(tag => tag.split(':').pop())
       .map(id => state.usersById[id])
+      .filter(user => user)
 
   emitter.isMentioned = (user, message) =>
     message.raw.tags.includes(`:user:${user.id}`)
