@@ -81,6 +81,10 @@ function Flowdock (config) {
       .map(tag => tag.split(':').pop())
       .map(id => state.usersById[id])
       .filter(user => user)
+      .sort((a, b) => {
+        const text = message.text.toLowerCase()
+        return text.indexOf(a.name.toLowerCase()) - text.indexOf(b.name.toLowerCase())
+      })
 
   emitter.isMentioned = (user, message) =>
     message.raw.tags.includes(`:user:${user.id}`)
